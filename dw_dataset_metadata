@@ -1,0 +1,42 @@
+
+
+We have one relatively small association dataset was provided to us by statistician Dong Wang, to use for testing genotype-environment apps.  This is a simulation based on real data, but with a function used to generate phenotype values.  This method of making a simulation is sometimes called ‘making a gold standard’. 
+
+This data was provided in two files, simuYield.csv and genot.csv.  
+
+The primary key that connects these two is called line in the genot file and line.number in the simuYield file.  
+
+There are 280 individuals (called lines in this dataset) in the population.  In the genot file, these individuals are listed in the second column (the first column is non-header row numbers).  
+
+The remaining genot columns have a header for the SNP state that begins at wPt.9592 and goes to wPt.742717.  There are 442 wPt. columns
+
+In each wPt. column, the SNP state is listed as 1, 0 or a decimal probability of the state (that probability may need be rounded to 1 or 0 to use in apps). 
+
+There are no physical or map distances, so if an app needs those you’d need to use an increment (from 1 to 442.
+
+The simuYield file contains phenotype (y, measured) values for nine different environments.  The line is given in the second column with the header line.number, incrementing from 1 to 280.  The nine simulated measurements on these lines are given in columns titled location1, location2…location9.
+
+These values were generated using this procedure:  
+For the phenotype values, besides marker effects, I added the random effects that is associated with the relationship matrix, then add environmental residues from 9 locations.  Specifically, for line k, I take the (real) phenotype values from 9 Nebraska locations measured in 2010 for line k and subtract the mean value across locations for this line to obtain the  9 environmental residues, which should include environmental effect and residual random error.  I added these 9 numbers to the simulated marker effects and genetic random effect to obtain the simulated phenotype for  line k at 9 environments.  
+
+
+The values were assigned to these markers (this information is needed to make the .ote file for winnow):
+
+Marker	   effect_size
+"wPt.2150" 	9.51 
+"wPt.0596" 	8.07 
+"wPt.1171" 	11.11
+"wPt.1903" 	14.02
+"wPt.6116" 	5.99 
+"tPt.5675" 	7.11 
+"wPt.4064" 	11.46
+"wPt.6064" 	9.86 
+
+and all other markers are assumed to have no effects.
+
+
+As I understand this, the first marker, wPt.2150, should be an important feature when we use the phenotype values from the location1 column.  However, we should check this when we run these, it’s not that clear what is really assigned here.
+
+It is likely that these files would need to be reshaped to input into an association app, in order to generate a covariate column instead of nine phenotype columns.  This can be done offline and put back into our validate example cyverse datastore folder. 
+
+
